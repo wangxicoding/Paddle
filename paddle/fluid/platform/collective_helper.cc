@@ -226,7 +226,7 @@ BKCLComm* BKCLCommContext::CreateBKCLComm(BKCLUniqueId* bkcl_id, int nranks,
                         "XPU API return wrong value[%d], please check whether "
                         "Baidu Kunlun Card is properly installed.",
                         ret));
-  auto ret = bkcl_init_rank(&comm, rank, nranks, bkcl_id);
+  ret = bkcl_init_rank(&comm, rank, nranks, bkcl_id);
   PADDLE_ENFORCE_EQ(ret, BKCL_SUCCESS,
                     platform::errors::PreconditionNotMet(
                         "bkcl_init_rank failed, got wrong value [%d].", ret));
