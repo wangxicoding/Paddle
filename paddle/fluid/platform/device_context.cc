@@ -188,13 +188,16 @@ XPUDeviceContext::XPUDeviceContext(XPUPlace place) : place_(place) {
                         "XPU API return wrong value[%d], please check whether "
                         "Baidu Kunlun Card is properly installed.",
                         ret));
+
+  LOG_FIRST_N(WARNING, 1) << "Please NOTE: xpu device: " << place_.device;
+
   context_ = xpu::create_context();
   void* l3ptr = nullptr;
   int l3_size = 13.5 * 1024 * 1024;
   xpu_malloc(static_cast<void**>(&l3ptr), l3_size, XPU_MEM_L3);
   if (l3ptr != nullptr) {
     context_->_l3_mgr.set(l3ptr, l3_size);
-    std::cout << "set l3 size " << l3_size << std::endl;
+    std::cerr << "set l3 size " << l3_size << std::endl;
   }
   ret = xpu_set_device(dev_id);
   PADDLE_ENFORCE_EQ(ret, XPU_SUCCESS,
