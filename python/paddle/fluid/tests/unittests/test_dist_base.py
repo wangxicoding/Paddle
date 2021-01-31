@@ -470,7 +470,6 @@ class TestParallelDyGraphRunnerBase(object):
         elif fluid.core.is_compiled_with_xpu():
             device_id = int(os.getenv("FLAGS_selected_xpus", "0"))
             place = fluid.XPUPlace(device_id)
-            print("place:{}".format(place))
         else:
             assert ("Only support CUDAPlace or XPUPlace for now.")
 
@@ -600,7 +599,7 @@ def runtime_main(test_class):
         '--update_method',
         type=str,
         default="local",
-        choices=["pserver", "nccl2", "bkcl","local", "nccl2_reduce_layer"])
+        choices=["pserver", "nccl2", "bkcl", "local", "nccl2_reduce_layer"])
     parser.add_argument('--trainer_id', type=int, required=False, default=0)
     parser.add_argument('--trainers', type=int, required=False, default=1)
     parser.add_argument('--nccl_comm_num', type=int, required=False, default=1)
@@ -680,7 +679,7 @@ class TestDistBase(unittest.TestCase):
             else:
                 self.__use_cuda = False
                 self._use_dgc = False
-        
+
         if self._use_reduce:
             assert not self._use_dgc
 
@@ -1032,8 +1031,8 @@ class TestDistBase(unittest.TestCase):
 
         return tr_cmd, env
 
-    def _run_cluster_nccl2(self, model, envs, update_method,
-                           check_error_log, log_name):
+    def _run_cluster_nccl2(self, model, envs, update_method, check_error_log,
+                           log_name):
         if self._use_hallreduce:
             self._ps_endpoints = ""
 
@@ -1051,12 +1050,12 @@ class TestDistBase(unittest.TestCase):
 
         # NOTE: we reuse ps_endpoints as nccl2 worker endpoints
         worker_endpoints = self._ps_endpoints.split(",")
-       # if nccl2_reduce_layer:
-       #     update_method = "nccl2_reduce_layer"
-       # elif bkcl:
-       #     update_method = "bkcl"
-       # else:
-       #     update_method = "nccl2"
+        # if nccl2_reduce_layer:
+        #     update_method = "nccl2_reduce_layer"
+        # elif bkcl:
+        #     update_method = "bkcl"
+        # else:
+        #     update_method = "nccl2"
 
         trainer_num = len(worker_endpoints)
 
