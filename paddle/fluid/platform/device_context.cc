@@ -194,7 +194,7 @@ XPUDeviceContext::XPUDeviceContext(XPUPlace place) : place_(place) {
   xpu_malloc(static_cast<void**>(&l3ptr), l3_size, XPU_MEM_L3);
   if (l3ptr != nullptr) {
     context_->_l3_mgr.set(l3ptr, l3_size);
-    std::cout << "set l3 size " << l3_size << std::endl;
+    std::cerr << "set l3 size " << l3_size << std::endl;
   }
   ret = xpu_set_device(dev_id);
   PADDLE_ENFORCE_EQ(ret, XPU_SUCCESS,
