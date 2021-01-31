@@ -19,7 +19,7 @@ import paddle.fluid as fluid
 print("compile with xpu:", fluid.core.is_compiled_with_xpu())
 print("get_xpu_device_count:", fluid.core.get_xpu_device_count())
 
-if fluid.core.is_compiled_with_xpu() and fluid.core.get_cuda_device_count() > 0:
+if fluid.core.is_compiled_with_xpu() and fluid.core.get_xpu_device_count() > 0:
     sys.exit(0)
 else:
     sys.exit(1)
