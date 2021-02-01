@@ -1050,12 +1050,6 @@ class TestDistBase(unittest.TestCase):
 
         # NOTE: we reuse ps_endpoints as nccl2 worker endpoints
         worker_endpoints = self._ps_endpoints.split(",")
-        # if nccl2_reduce_layer:
-        #     update_method = "nccl2_reduce_layer"
-        # elif bkcl:
-        #     update_method = "bkcl"
-        # else:
-        #     update_method = "nccl2"
 
         trainer_num = len(worker_endpoints)
 
