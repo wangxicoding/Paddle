@@ -153,9 +153,9 @@ class ConcatFunctor<platform::XPUDeviceContext, T> {
     PADDLE_ENFORCE_EQ(
         r, XPU_SUCCESS,
         platform::errors::External(
-            "XPU API return wrong value[%d], please check whether "
+            "XPU API return wrong value[%d %s], please check whether "
             "Baidu Kunlun Card is properly installed.",
-            r));
+            r, XPUAPIErrorMsg[r]));
   }
 };
 
@@ -194,9 +194,9 @@ class SplitFunctor<platform::XPUDeviceContext, T> {
     PADDLE_ENFORCE_EQ(
         r, XPU_SUCCESS,
         platform::errors::External(
-            "XPU API return wrong value[%d], please check whether "
+            "XPU API return wrong value[%d %s], please check whether "
             "Baidu Kunlun Card is properly installed.",
-            r));
+            r, XPUAPIErrorMsg[r]));
   }
 };
 #endif
