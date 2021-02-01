@@ -39,8 +39,6 @@ namespace paddle {
 namespace imperative {
 
 #if (defined PADDLE_WITH_NCCL) || (defined PADDLE_WITH_XPU_BKCL)
-std::shared_ptr<Reducer> Reducer::s_instance_ = NULL;
-
 template <typename DeviceContext, typename T>
 static void ConcatTensorsForAllReduce(
     const DeviceContext &context,
@@ -306,13 +304,7 @@ Reducer::Reducer(const std::vector<std::shared_ptr<imperative::VarBase>> &vars,
             })));
     var_index_map_[var->GradVarBase()->SharedVar().get()] = global_var_index;
   }
-
-  std::call_once(once_flag_, []() {
-    std::atexit([]() { Reducer::GetInstance()->ReleaseReducer(); });
-  });
 }
-
-void Reducer::ReleaseReducer() { parallel_ctx_.reset(); }
 
 void Reducer::InitializeDenseGroups(
     const std::vector<size_t> &variable_indices_, Group *p_group) {
